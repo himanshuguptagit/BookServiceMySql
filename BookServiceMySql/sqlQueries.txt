@@ -1,0 +1,72 @@
+﻿CREATE DATABASE books
+
+//Tables
+
+1. Authors
+CREATE TABLE Authors
+( Id INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(100) NOT NULL,
+  PRIMARY KEY (Id)
+);
+[
+    {
+        "Id": 1,
+        "Name": "Jane Austen"
+    },
+    {
+        "Id": 2,
+        "Name": "Charles Dickens"
+    },
+    {
+        "Id": 3,
+        "Name": "Miguel de Cervantes"
+    }
+]
+
+
+2. Books
+CREATE TABLE Books
+( Id INT NOT NULL AUTO_INCREMENT,
+  Title VARCHAR(100) NOT NULL,
+  Year INT,
+  Price FLOAT,
+  AuthorId INT,
+  Genre VARCHAR(100),
+  PRIMARY KEY (Id),
+	FOREIGN KEY (AuthorId) REFERENCES Authors(Id)
+);
+
+[
+    {
+   "Id": 1,
+    "Title": "Pride and Prejudice",
+    "Year": 1813,
+    "Price": 9.99,
+    "AuthorName": "Jane Austen",
+    "Genre": "Comedy of manners"
+    },
+    {
+    "Id": 2,
+    "Title": "Northanger Abbey",
+    "Year": 1817,
+    "Price": 12.95,
+    "AuthorName": "Jane Austen",
+    "Genre": "Gothic parody"
+    },
+    {
+    "Id": 3,
+    "Title": "David Copperfield",
+    "Year": 1850,
+    "Price": 15.00,
+    "AuthorName": "Charles Dickens",
+    "Genre": "Bildungsroman"
+    },
+    {
+    "Id": 4,
+    "Title": "Don Quixote",
+    "Year": 1617,
+    "Price": 8.95,
+    "AuthorName": "Miguel de Cervantes",
+    "Genre": "Picaresque"
+    }
+]
