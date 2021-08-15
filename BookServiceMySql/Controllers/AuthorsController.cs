@@ -10,11 +10,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using MySql.Data.MySqlClient;
+using NLog;
 
 namespace BookServiceMySql.Controllers
 {
     public class AuthorsController : ApiController
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         // GET: api/Authors
         public async Task<IHttpActionResult> Get()
         {
@@ -27,10 +30,14 @@ namespace BookServiceMySql.Controllers
                 {
 
                     var result = await conn.QueryAsync<Author>(sql);
+                    logger.Info("Authors fetched: " + result.Count());
+
                     return Ok(result);
                 }
             }catch(Exception e)
             {
+                logger.Debug(e.Message);
+
                 return InternalServerError(e);
             }
 
@@ -82,6 +89,7 @@ namespace BookServiceMySql.Controllers
                 }
             }catch(Exception e)
             {
+                logger.Debug(e.Message);
                 return InternalServerError(e);
             }
 
@@ -117,6 +125,8 @@ namespace BookServiceMySql.Controllers
                 }
             } catch(Exception e)
             {
+
+                logger.Debug(e.Message);
                 return InternalServerError(e);
             }
  

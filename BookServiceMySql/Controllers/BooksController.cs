@@ -2,6 +2,7 @@
 using BookServiceMySql.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,8 @@ namespace BookServiceMySql.Controllers
 {
     public class BooksController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         // GET: api/Books
         public async Task<IHttpActionResult> Get()
         {
@@ -26,11 +29,15 @@ namespace BookServiceMySql.Controllers
                 using (var conn = new MySqlConnection(Constants.DATABASE_CONNECTION_STRING))
                 {
                     var result = await conn.QueryAsync<BookDto>(sql);
+                    logger.Info("Books fetched: " + result.Count());
+
                     return Ok(result);
                 }
             }
             catch (Exception e)
             {
+                logger.Debug(e.Message);
+
                 return InternalServerError(e);
             }
 
@@ -83,6 +90,8 @@ namespace BookServiceMySql.Controllers
             }
             catch (Exception e)
             {
+                logger.Debug(e.Message);
+
                 return InternalServerError(e);
             }
 
@@ -122,6 +131,8 @@ namespace BookServiceMySql.Controllers
             }
             catch (Exception e)
             {
+                logger.Debug(e.Message);
+
                 return InternalServerError(e);
             }
 
